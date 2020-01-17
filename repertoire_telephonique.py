@@ -1,6 +1,7 @@
 from terminaltables import AsciiTable
 entrees_par_contact = 3
 repertoire = [{'Nom':'Adrien', 'Tel':'04.94.36.12.95', 'Adresse':'12 Rue du yahourt'},\
+              {'Nom':'Dobby', 'Tel':'04.94.36.12.95', 'Adresse':'325 chemin du train des pignes'},\
               {'Nom':'Bob', 'Tel':'01.44.99.10.32', 'Adresse':'38 Avenue Victor Hugo'}]
 saisie = True
 liste_choix_possibles = ["L","A","S","R","M"]
@@ -42,8 +43,9 @@ def lister_les_contacts():
 def ajouter_un_contact(nouveau_contact, nouveau_numero, nouvelle_adresse, repertoire):
     if not existe(nouveau_contact, repertoire):
         repertoire.append({'Nom':nouveau_contact, 'Tel':nouveau_numero, 'Adresse':nouvelle_adresse})
-        print("contact créé avec succès")
-        print("{} est désormais disponible dans le répertoire".format (nouveau_contact))
+        return True
+    else:
+        return False
 
 def supprimer_un_contact(contact_a_supprimer, repertoire):
     for i, contact in enumerate(repertoire):
@@ -52,11 +54,11 @@ def supprimer_un_contact(contact_a_supprimer, repertoire):
             return True
 
 def rechercher_par_nom(recherche_contact, repertoire):
+    matches = []
     for contact in repertoire:
         if recherche_contact.lower() in contact["Nom"].lower():
-            print("correspondace trouvée :\n {} : {}, domicilié au {}.".format(contact["Nom"], \
-                                                                               contact["Tel"], \
-                                                                               contact["Adresse"]))
+            matches.append(contact)
+    return matches
 
 def modifier_numero(modifier_contact, nouveau_numero, nouvelle_adresse, repertoire):
     for i, contact in enumerate(repertoire):
@@ -74,14 +76,22 @@ while saisie:
     elif choix.upper() == "L":
         lister_les_contacts()
     elif choix.upper() == "A":
-        ajouter_un_contact(demander_nom(), demander_num(), demander_adresse(), repertoire)
+        if ajouter_un_contact(demander_nom(), demander_num(), demander_adresse(), repertoire):
+            print("contact créé avec succès")
+        else:
+            print("Echec de la quête ! ")
     elif choix.upper() == "S":
         if not supprimer_un_contact(demander_nom(), repertoire):
             print("Suppression échouée, contact non trouvé ")
         else:
             print("Suppression effectuée ")
     elif choix.upper() == "R":
-        rechercher_par_nom(demander_nom(), repertoire)
+        matches = rechercher_par_nom(demander_nom(), repertoire)
+        if matches:
+            for match in matches:
+                print("correspondance trouvée :\n {} : {}, domicilié(e) au {}.".format(match["Nom"], \
+                                                                                   match["Tel"], \
+                                                                                   match["Adresse"]))
     elif choix.upper() == "M":
         if not modifier_numero(demander_nom(), demander_num(), demander_adresse(), repertoire):
             print("Modification non effectuée, contact non trouvé ")
