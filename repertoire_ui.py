@@ -1,10 +1,32 @@
 from terminaltables import AsciiTable
 from utils.repertoire_action import *
 
-entrees_par_contact = 3
 repertoire = [{'Nom':'Adrien', 'Tel':'04.94.36.12.95', 'Adresse':'12 Rue du yahourt'},\
               {'Nom':'Dobby', 'Tel':'04.94.36.12.95', 'Adresse':'325 chemin du train des pignes'},\
               {'Nom':'Bob', 'Tel':'01.44.99.10.32', 'Adresse':'38 Avenue Victor Hugo'}]
+
+def demander_nom():
+    return input("Nom ? ").capitalize()
+
+def demander_num():
+    return input("numéro ? ")
+
+def demander_adresse():
+    return input("adresse ? ")
+
+def lister_les_contacts():
+    if not repertoire:
+        print("Le répertoire est vide")
+    else:
+        print("Liste des contacts du répertoire :")
+        show_contact_table (repertoire)
+
+def show_contact_table (repertoire):
+    liste_des_contacts = [["Noms", "Numéros", "adresses"]]
+    for contact in repertoire:
+        liste_des_contacts.append([contact["Nom"],contact["Tel"],contact["Adresse"]])
+    liste_des_contacts = AsciiTable(liste_des_contacts)
+    print(liste_des_contacts.table)
 
 def menu():
     choix = input("\nVeuillez sélectionner une option : \n(L)ister les contacts du répertoire \n" \
