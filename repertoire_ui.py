@@ -1,5 +1,5 @@
 from terminaltables import AsciiTable
-from utils import repertoire_action
+from utils.repertoire_action import *
 
 entrees_par_contact = 3
 repertoire = [{'Nom':'Adrien', 'Tel':'04.94.36.12.95', 'Adresse':'12 Rue du yahourt'},\
