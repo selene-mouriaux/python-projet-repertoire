@@ -1,4 +1,4 @@
-import repertoire_utils_dict as repertoire_utils
+import repertoire_utils_text as repertoire_utils
 
 def get_rep():
     return repertoire_utils.get_rep()
