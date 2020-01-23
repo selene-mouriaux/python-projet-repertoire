@@ -5,13 +5,16 @@ repertoire = [{'nom':'Adrien', 'telephone':'04.94.36.12.95', 'adresse':'12 Rue d
               {'nom':'Bob', 'telephone':'01.44.99.10.32', 'adresse':'38 Avenue Victor Hugo'}]
 
 def get_rep():
-    open("Json.txt", "r")
-    repertoire = json.loads(read())
-    close()
+    data = open("Json.txt", "r")
+    repertoire = json.loads(data.read())
+    data.close()
     return repertoire
 
 def append_rep(repertoire, personne):
     repertoire.append(personne)
+    with open("Json.txt", "w") as data:
+        data.write(json.dumps(repertoire))
+    return repertoire
 
 def del_rep(repertoire, personne):
     for i, contact in enumerate(repertoire):
